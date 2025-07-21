@@ -42,10 +42,68 @@ export const register = async (req: Request, res: Response) => {
             msg: "Cadastro realizado com sucesso!"
         });
     }   
-    catch(err){
+    catch(err: any){
         res.status(500).json({
             error: "Erro interno do servidor!"
         });
         console.log(err);
     }
 }
+
+
+//Login
+export const login = async (req: Request, res: Response) => {
+    try{
+
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if(!user){
+            return res.status(422).json({
+                error: "Usuário não encontrado!"
+            });
+        };
+
+        if(!(await bcrypt.compare(password, user.password))){
+            return res.status(422).json({
+                error: "Senha incorreta!"
+            });
+        };
+
+        const idString = (user._id as string).toString()
+
+        return res.status(200).json({
+            _id: user._id,
+            token: generateToken(idString)
+        })
+
+    }
+    catch(err: any){
+        res.status(500).json({
+            error: "Erro interno do servidor!"
+        });
+        console.log(err);
+    }
+}
+
+interface CustomRequest extends Request {
+  user?: any;
+}
+
+//Dados de usuário logado
+export const profile = async (req: CustomRequest, res: Response) => {
+    try{
+        const user = req.user
+        res.status(200).json(user)
+    }
+    catch(err: any){
+        res.status(500).json({
+            error: "Erro interno do servidor!"
+        });
+        console.log(err);
+    }
+}
+
+
+

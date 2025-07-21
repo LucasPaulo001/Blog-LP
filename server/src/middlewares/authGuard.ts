@@ -6,7 +6,7 @@ dotenv.config();
 const jwt_secret = process.env.JWT_SECRET;
 
 interface CustomRequest extends Request {
-    user?: any;
+  user?: any;
 }
 
 //Função de autorização via token do usuário

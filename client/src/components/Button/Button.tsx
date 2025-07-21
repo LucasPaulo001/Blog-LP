@@ -1,0 +1,16 @@
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
+interface Props {
+    variant: 'text' | 'outlined' | 'contained';
+    text: string;
+    loading: boolean;
+}
+
+export default function BasicButtons({ variant, text, loading }: Props) {
+  return (
+    <Stack spacing={2} direction="row">
+      <Button variant={variant} loading={loading}>{text}</Button>
+    </Stack>
+  );
+}

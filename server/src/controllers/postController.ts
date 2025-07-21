@@ -10,13 +10,12 @@ export function generateSlug(title: string): string {
   return title
     .toLowerCase()
     .trim()
-    .normalize("NFD") 
+    .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-") 
-    .replace(/-+/g, "-"); 
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
 }
-
 
 //Criação de postagem
 export const createPost = async (req: customRequest, res: Response) => {
@@ -61,10 +60,59 @@ export const findAllPosts = async (req: Request, res: Response) => {
 //Acessando um post
 export const accessPost = async (req: Request, res: Response) => {
   try {
-
     const slug = req.params.slug;
 
     const post = await Post.findOne({ slug });
+
+    if (!post) {
+      return res.status(404).json({
+        error: "Postagem não encontrada!",
+      });
+    }
+
+    res.status(200).json(post);
+  } catch (err: any) {
+    res.status(500).json({
+      error: "Erro interno do servidor!",
+    });
+    console.log(err);
+  }
+};
+
+//Deletando postagem
+export const deletePost = async (req: Request, res: Response) => {
+  try {
+    const postId = req.params.id;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        error: "Postagem não encontrada!",
+      });
+    }
+
+    await post.deleteOne();
+
+    res.status(200).json({
+      msg: "Postagem deletada com sucesso!",
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      error: "Erro interno do servidor!",
+    });
+    console.log(err);
+  }
+};
+
+//Atualizando postagem
+export const updatePost = async (req: Request, res: Response) => {
+  try {
+
+    const postId = req.params.id;
+    const data = req.body;
+
+    const post = await Post.findById(postId);
 
     if(!post){
         return res.status(404).json({
@@ -72,8 +120,12 @@ export const accessPost = async (req: Request, res: Response) => {
         });
     };
 
-    res.status(200).json(post)
+    await Post.findByIdAndUpdate({ _id: postId }, data);
 
+    res.status(201).json({
+        msg: "Postagem editada com sucesso!",
+        post
+    })
 
   } catch (err: any) {
     res.status(500).json({

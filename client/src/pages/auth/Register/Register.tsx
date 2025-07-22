@@ -8,12 +8,13 @@ export const Register = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const { register } = useAuth();
+    const { register, loading } = useAuth();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         register(nome, email, password);
     }
+
 
 
     return(
@@ -52,7 +53,12 @@ export const Register = () => {
                         </div>
                     </div>
 
-                    <BasicButtons type={"submit"} text="Fazer cadastro" variant="contained" loading={false} />
+                    <BasicButtons 
+                        type={"submit"} 
+                        text="Fazer cadastro" 
+                        variant="contained" 
+                        loading={loading ? true : false} 
+                    />
                 </form>
             </div>
         </div>

@@ -1,8 +1,11 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 import type { ReactNode } from "react";
 
@@ -20,6 +23,8 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => void;
   logout: () => void;
   getUser: () => void;
+  loading: boolean;
+  token: string | null,
   isAuthenticated: boolean;
 }
 
@@ -29,11 +34,24 @@ import { api } from "../services/api";
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | object>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null)
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token){
+      setToken(token);
+      getUser();
+    }
+  }, [])
 
   //Função de login
   const login = async (email: string, password: string) => {
     try{
+      setLoading(true);
       const res = await api.post("/api/users/login", { email, password });
       const { token } = res.data;
       localStorage.setItem("token", token);
@@ -42,13 +60,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     catch(err){
       console.error(err)
     }
+    finally{
+      setLoading(false)
+    }
   };
 
   //Função de registro
   const register = async (name: string, email: string, password: string) => {
     try{
+      setLoading(true)
       const res = await api.post("/api/users/register", { name, email, password });
-      console.log(res.data.msg)
+      console.log(res.data.msg);
+      setLoading(false)
+      navigate("/login");
     }
     catch(err){
       console.error(err)
@@ -58,9 +82,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //Função para pegar dados do usuário
   const getUser = async () => {
     try{
-      const res = await api.get("/api/users/profile");
-      const { user } = res.data;
-      setUser(user);
+      const res = await api.get("/api/users/profile", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      setUser(res.data);
     }
     catch(err){
       console.error(err)
@@ -69,6 +96,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setUser(null);
+    setToken(null);
+    localStorage.removeItem("token");
   };
 
   const value: AuthContextType = {
@@ -76,7 +105,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     register,
     logout,
+    loading,
     getUser,
+    token,
     isAuthenticated: !! user
   };
 

@@ -1,16 +1,18 @@
 import { useState, type FormEvent } from "react"
 import BasicButtons from "../../../components/Button/Button"
 import BasicTextFields from "../../../components/Input/Input"
-
+import { useAuth } from "../../../contexts/authContext";
 
 export const Register = () => {
     const [nome, setNome] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    const { register } = useAuth();
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(nome, email, password)
+        register(nome, email, password);
     }
 
 
@@ -24,7 +26,8 @@ export const Register = () => {
                         <div className="w-full">
                             <BasicTextFields 
                                 fullWidth={true} 
-                                label="Nome" 
+                                label="Nome"
+                                type="text" 
                                 variant="standard" 
                                 onChange={(e) => setNome(e.target.value)}
                             />
@@ -34,6 +37,7 @@ export const Register = () => {
                                 fullWidth={true} 
                                 label="E-mail" 
                                 variant="standard" 
+                                type="email"
                                 onChange={(e) => setEmail(e.target.value)}    
                             />
                         </div>
@@ -42,6 +46,7 @@ export const Register = () => {
                                 fullWidth={true} 
                                 label="Senha" 
                                 variant="standard" 
+                                type={"password"}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>

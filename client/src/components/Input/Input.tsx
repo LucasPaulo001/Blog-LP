@@ -7,6 +7,7 @@ interface Props {
   variant: "outlined" | "filled" | "standard";
   fullWidth: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
 }
 
 export default function BasicTextFields({
@@ -14,6 +15,7 @@ export default function BasicTextFields({
   variant,
   fullWidth,
   onChange,
+  type
 }: Props) {
   return (
     <Box
@@ -27,6 +29,7 @@ export default function BasicTextFields({
         fullWidth={fullWidth}
         id="standard-basic"
         label={label}
+        type={type}
         variant={variant}
       />
     </Box>

@@ -62,7 +62,7 @@ export const accessPost = async (req: Request, res: Response) => {
   try {
     const slug = req.params.slug;
 
-    const post = await Post.findOne({ slug });
+    const post = await Post.findOne({ slug }).populate("author");
 
     if (!post) {
       return res.status(404).json({

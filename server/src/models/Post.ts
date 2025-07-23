@@ -2,9 +2,11 @@ import mongoose, { model, Schema, Document, Types } from "mongoose";
 
 export interface IPost extends Document {
     title: string;
+    banner: string;
     content: string;
     author: Types.ObjectId;
     slug: string;
+    utilsLinks: URL[];
     tags: string[];
     published: boolean;
     createdAt: Date;
@@ -16,6 +18,10 @@ const PostSchema = new Schema<IPost>({
         type: String,
         required: true
     },
+    banner: {
+        type: String
+    },
+
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
@@ -29,6 +35,10 @@ const PostSchema = new Schema<IPost>({
         type: String,
         required: true,
         unique: true
+    },
+    utilsLinks: {
+        type: [String],
+        default: []
     },
     tags: {
         type: [String],

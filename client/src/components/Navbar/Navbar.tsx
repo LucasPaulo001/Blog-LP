@@ -1,28 +1,26 @@
 import { RxMoon } from "react-icons/rx";
 import { RiSunFoggyFill } from "react-icons/ri";
 import { useTheme } from "../../contexts/themeContext";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
 export const Navbar = () => {
     const { active, showActive } = useTheme();
 
-    useEffect(() => {
-        console.log(active)
-    }, [active])
 
   return (
     <nav className="w-full p-5! shadow-md flex items-center flex-row place-content-between">
       <div>
         <h1 className="text-2xl">
-          Lucas Paulo <span className="text-cyan-700 font-bold">Dev</span>
+          <Link to={"/"}>Lucas Paulo <span className="text-cyan-700 font-bold">Dev</span></Link>
         </h1>
       </div>
       <div>
         <ul className="flex flex-row gap-10">
-          <li>Início</li>
-          <li>Sobre</li>
-          <li>Posts</li>
+          <li><Link to={"/"}>Início</Link></li>
+          <li><Link to={"/create-post"}>Criar Postagem</Link></li>
+          <li><Link to={"/about"}>Sobre</Link></li>
+          <li>Sair</li>
           <button className="cursor-pointer" onClick={showActive}>
             {
                 active ? (

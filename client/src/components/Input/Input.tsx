@@ -8,6 +8,8 @@ interface Props {
   fullWidth: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string;
+  multiline: boolean;
+  maxRows: number;
 }
 
 export default function BasicTextFields({
@@ -15,7 +17,9 @@ export default function BasicTextFields({
   variant,
   fullWidth,
   onChange,
-  type
+  type,
+  multiline,
+  maxRows
 }: Props) {
   return (
     <Box
@@ -29,7 +33,9 @@ export default function BasicTextFields({
         fullWidth={fullWidth}
         id="standard-basic"
         label={label}
+        multiline={multiline}
         type={type}
+        maxRows={maxRows}
         variant={variant}
       />
     </Box>

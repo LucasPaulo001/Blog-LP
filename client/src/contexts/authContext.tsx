@@ -5,8 +5,6 @@ import {
   useState,
 } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import type { ReactNode } from "react";
 
 // Tipagem do usuário
@@ -30,6 +28,7 @@ interface AuthContextType {
 
 //Service de config da api
 import { api } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -55,7 +54,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await api.post("/api/users/login", { email, password });
       const { token } = res.data;
       localStorage.setItem("token", token);
-      await getUser();
+      setToken(token)
+      getUser();
     }
     catch(err){
       console.error(err)
@@ -71,11 +71,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true)
       const res = await api.post("/api/users/register", { name, email, password });
       console.log(res.data.msg);
-      setLoading(false)
-      navigate("/login");
+      navigate("/")
     }
     catch(err){
       console.error(err)
+    }
+    finally{
+      setLoading(false);
     }
   }
 
@@ -98,6 +100,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
+    navigate("/")
+    
   };
 
   const value: AuthContextType = {

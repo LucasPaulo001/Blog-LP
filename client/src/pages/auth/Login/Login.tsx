@@ -30,6 +30,8 @@ export const Login = () => {
                 fullWidth={true}
                 label="E-mail"
                 variant="standard"
+                maxRows={1}
+                multiline={false}
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -38,6 +40,8 @@ export const Login = () => {
               <BasicTextFields
                 fullWidth={true}
                 label="Senha"
+                maxRows={1}
+                multiline={false}
                 variant="standard"
                 type={"password"}
                 onChange={(e) => setPassword(e.target.value)}

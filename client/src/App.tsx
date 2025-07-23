@@ -11,6 +11,7 @@ import { CreatePost } from "./pages/createPost/CreatePost";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import { About } from "./pages/about/About";
+import { PostContent } from "./pages/PostDetails/PostDetails";
 
 function App() {
   const { token } = useAuth();
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/about" element={<About />} />
+          <Route path="/posts/:slug" element={<PostContent />} />
         </Routes>
         <Footer />
       </div>

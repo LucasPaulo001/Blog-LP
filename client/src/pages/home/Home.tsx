@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
 import { usePosts } from "../../contexts/postsContext";
-import Variants from "../../components/Skeleton/Skeleton";
+import LinearIndeterminate from "../../components/Progress/Progress";
 
 export const Home = () => {
   const { loading, posts } = usePosts();
 
   return (
     <div>
-      <div className="h-screen mt-6! flex flex-col gap-10">
+      <div className="h-screen flex flex-col gap-10">
         {loading ? (
-            <Variants />
+            <LinearIndeterminate />
         ) : 
         posts?.map((post, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl shadow-md p-5! hover:shadow-xl transition-all"
+            className="mt-5! rounded-2xl shadow-md p-5! hover:shadow-xl transition-all"
           >
             
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            <h2 className="text-xl font-semibold mb-2">
               {post.title}
             </h2>
-            <p className="text-gray-600 line-clamp-3">
+            <p className="line-clamp-3">
               {post.content.slice(0, 100)}...
             </p>
 

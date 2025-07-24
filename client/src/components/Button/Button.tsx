@@ -6,13 +6,14 @@ interface Props {
     text: string;
     loading: boolean;
     type: 'submit' | 'button' | 'reset';
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
 }
 
-export default function BasicButtons({ variant, text, loading, type, onClick }: Props) {
+export default function BasicButtons({ variant, text, loading, type, onClick, color }: Props) {
   return (
     <Stack spacing={2} direction="row">
-      <Button variant={variant} onClick={onClick} type={type} loading={loading}>{text}</Button>
+      <Button color={color} variant={variant} onClick={onClick} type={type} loading={loading}>{text}</Button>
     </Stack>
   );
 }

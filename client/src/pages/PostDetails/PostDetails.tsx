@@ -15,12 +15,18 @@ export const PostContent = () => {
   }, [slug]);
 
   return (
-    <div className="h-screen">
+    <div className={loading ? "h-screen" : ""}>
       {loading ? (
         <LinearIndeterminate />
       ) : details ? (
-        <div className="flex flex-col gap-10 items-center mt-10!">
-          <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-10 items-center">
+          <div className="flex flex-col w-full p-10! gap-5">
+              {details.banner && (
+                <div className="w-full">
+                  <img className="w-full h-64 object-cover" src={details.banner} alt="" />
+                </div>
+                )
+              }
               <h1 className="text-2xl font-bold">{details.title}</h1>
               <div className="flex flex-row place-content-between">
                   <span>Data: xx/xx/xxxx</span>

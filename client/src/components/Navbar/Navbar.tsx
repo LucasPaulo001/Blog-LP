@@ -4,10 +4,14 @@ import { useTheme } from "../../contexts/themeContext";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import BasicButtons from "../Button/Button";
+import { CiMenuBurger } from "react-icons/ci";
+import { useState } from "react";
+import { MenuMob } from "../MenuMob/MenuMob";
 
 export const Navbar = () => {
   const { active, showActive } = useTheme();
   const { token, logout, loading } = useAuth();
+  const [showMenuMob, setShowMenuMob] = useState<boolean>(false);
 
   return (
     <nav className="w-full p-5! shadow-md flex items-center flex-row place-content-between">
@@ -18,7 +22,19 @@ export const Navbar = () => {
           </Link>
         </h1>
       </div>
-      <div>
+      {/* Menu amburguer */}
+      <button
+        className="md:hidden text-3xl cursor-pointer"
+        onClick={() => setShowMenuMob(true)}
+      >
+        <CiMenuBurger />
+      </button>
+
+      {/* Menu mobile */}
+      {<MenuMob setShowMenuMob={setShowMenuMob} showMenuMob={showMenuMob} />}
+
+      {/* Nav com os links */}
+      <div className="hidden md:flex">
         <ul className="flex flex-row items-center gap-10">
           <li>
             <Link to={"/"}>Início</Link>
@@ -31,12 +47,12 @@ export const Navbar = () => {
               <li>
                 <Link to={"/create-post"}>Criar Postagem</Link>
               </li>
-              <BasicButtons 
-                text="Sair" 
-                loading={loading ? true : false} 
-                type={"button"} 
-                variant={"text"} 
-                onClick={logout} 
+              <BasicButtons
+                text="Sair"
+                loading={loading ? true : false}
+                type={"button"}
+                variant={"text"}
+                onClick={logout}
               />
             </>
           ) : (

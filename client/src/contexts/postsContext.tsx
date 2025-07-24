@@ -7,6 +7,7 @@ interface Post {
   content: string;
   tags: string[];
   slug: string;
+  banner: string;
 }
 
 interface PostsContextType {

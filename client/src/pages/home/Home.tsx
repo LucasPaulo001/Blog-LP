@@ -7,7 +7,7 @@ export const Home = () => {
 
   return (
     <div>
-      <div className="h-screen flex flex-col gap-10">
+      <div className="h-screen mb-50! flex flex-col gap-10">
         {loading ? (
             <LinearIndeterminate />
         ) : 

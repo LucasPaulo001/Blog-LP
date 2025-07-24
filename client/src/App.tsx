@@ -2,7 +2,6 @@ import "./App.css";
 
 //libs
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Register } from "./pages/auth/Register/Register";
 import { Login } from "./pages/auth/Login/Login";
 import { Home } from "./pages/home/Home";
 import { useAuth } from "./contexts/authContext";
@@ -12,6 +11,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import { About } from "./pages/about/About";
 import { PostContent } from "./pages/PostDetails/PostDetails";
+const devL = import.meta.env.VITE_API_DEV_LOGIN;
 
 function App() {
   const { token } = useAuth();
@@ -22,12 +22,11 @@ function App() {
       <div className={active ? "dark:bg-gray-800 px-6 py-8 text-white ring shadow-xl ring-gray-900/5" : ""}>
         <Navbar />
         <Routes>
-          <Route path="/register" element={!token ? <Register /> : <Navigate to={"/"} />}/>
-          <Route path="/login" element={!token ? <Login /> : <Navigate to={"/"} />}/>
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/about" element={<About />} />
           <Route path="/posts/:slug" element={<PostContent />} />
+          <Route path={devL} element={!token ? <Login /> : <Navigate to={"/"} />} />
         </Routes>
         <Footer />
       </div>

@@ -42,7 +42,7 @@ export const Navbar = () => {
           <li>
             <Link to={"/about"}>Sobre</Link>
           </li>
-          {token ? (
+          {token && (
             <>
               <li>
                 <Link to={"/create-post"}>Criar Postagem</Link>
@@ -55,11 +55,7 @@ export const Navbar = () => {
                 onClick={logout}
               />
             </>
-          ) : (
-            <li>
-              <Link to={"/login"}>Entrar / Cadastrar</Link>
-            </li>
-          )}
+          ) }
           <button className="cursor-pointer" onClick={showActive}>
             {active ? (
               <RiSunFoggyFill className="text-4xl text-yellow-600" />

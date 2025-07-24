@@ -1,16 +1,21 @@
 import { useState, type FormEvent } from "react"
 import BasicButtons from "../../components/Button/Button"
 import BasicTextFields from "../../components/Input/Input"
+import { usePosts } from "../../contexts/postsContext";
 
 export const CreatePost = () => {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [tags, setTags] = useState("");
+    const [title, setTitle] = useState<string>("");
+    const [content, setContent] = useState<string>("");
+    const [tags, setTags] = useState<string>("");
+    const [banner, setBanner] = useState<string>("");
+
+    const { createPost, loading } = usePosts();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(title, content, tags)
+        createPost(title, content, banner, tags)
+        console.log(title, content, tags, banner);
     }
 
 
@@ -53,9 +58,20 @@ export const CreatePost = () => {
                             onChange={(e) => setTags(e.target.value)}
                         />
                     </div>
+                    <div className="w-full">
+                        <BasicTextFields
+                            fullWidth={true}
+                            label="Banner"
+                            multiline={false}
+                            maxRows={1}
+                            variant="standard"
+                            type="text"
+                            onChange={(e) => setBanner(e.target.value)}
+                        />
+                    </div>
                 </div>
 
-                <BasicButtons text="Postar" loading={false} type={"submit"} variant={"contained"} />
+                <BasicButtons text="Postar" loading={loading ? true : false} type={"submit"} variant={"contained"} />
             </form>
         </div>
     )

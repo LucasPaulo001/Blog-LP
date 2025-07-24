@@ -13,6 +13,7 @@ interface Post {
 interface PostsContextType {
   listPosts: () => void;
   postDetails: (slug: string) => void;
+  createPost: (title: string, content: string, banner: string, tags: string) => void;
   posts: Post[] | null;
   loading: boolean;
   details: Post | null;
@@ -34,6 +35,25 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     return () => setDetails(null);
   }, []);
+
+  //Criar postagem
+  const createPost = async (title: string, content: string, banner: string, tags: string) => {
+    try{
+      setLoading(true)
+      const res = await api.post("/api/posts/create/post", { title, content, banner, tags }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      setPosts((prev) => prev ? [...prev, res.data] : [res.data]);
+    }
+    catch(err){
+      console.log(err)
+    }
+    finally{
+      setLoading(false)
+    }
+  }
 
   //Função para listar postagens
   const listPosts = async () => {
@@ -69,6 +89,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
     details,
     listPosts,
     postDetails,
+    createPost
   };
 
   return (

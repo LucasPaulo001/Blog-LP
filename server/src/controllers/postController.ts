@@ -20,7 +20,7 @@ export function generateSlug(title: string): string {
 //Criação de postagem
 export const createPost = async (req: customRequest, res: Response) => {
   try {
-    const { title, author, content, tags } = req.body;
+    const { title, content, tags, banner, utilsLinks } = req.body;
     const userId = req.user;
 
     const post = await Post.create({
@@ -28,6 +28,8 @@ export const createPost = async (req: customRequest, res: Response) => {
       content,
       author: userId._id,
       slug: generateSlug(title),
+      banner,
+      utilsLinks,
       tags,
     });
 

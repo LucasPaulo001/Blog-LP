@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 interface Post {
+  _id: string;
   title: string;
   content: string;
   tags: string[];
@@ -17,6 +18,7 @@ interface PostsContextType {
   posts: Post[] | null;
   loading: boolean;
   details: Post | null;
+  deletePost: (postId: string) => void;
 }
 
 const PostsContext = createContext<PostsContextType | undefined>(undefined);
@@ -83,13 +85,34 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  //Função para excluir postagens
+  const deletePost = async (postId: string) => {
+    try{
+      setLoading(true)
+      const res = await api.delete(`/api/posts/delete/post/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      setPosts((prev) => prev ? prev?.filter((p) => p._id !== postId) : null);
+      console.log(res.data)
+    } 
+    catch(err){
+      console.error(err)
+    }
+    finally{
+      setLoading(false)
+    }
+  }
+
   const value: PostsContextType = {
     posts,
     loading,
     details,
     listPosts,
     postDetails,
-    createPost
+    createPost,
+    deletePost
   };
 
   return (

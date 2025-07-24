@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { usePosts } from "../../contexts/postsContext";
 import LinearIndeterminate from "../../components/Progress/Progress";
+import BasicMenu from "../../components/Button/ButtonMenu";
 
 export const Home = () => {
   const { loading, posts } = usePosts();
@@ -17,9 +18,12 @@ export const Home = () => {
             className="mt-5! rounded-2xl shadow-md p-5! hover:shadow-xl transition-all"
           >
             
-            <h2 className="text-xl font-semibold mb-2">
-              {post.title}
-            </h2>
+            <div className="flex flex-row place-content-between">
+              <h2 className="text-xl font-semibold mb-2">
+                {post.title}
+              </h2>
+              <BasicMenu loading={loading ? true : false} text="Menu" postId={post._id} />
+            </div>
             <p className="line-clamp-3">
               {post.content.slice(0, 100)}...
             </p>

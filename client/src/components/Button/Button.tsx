@@ -8,12 +8,13 @@ interface Props {
     type: 'submit' | 'button' | 'reset';
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+    className: string;
 }
 
-export default function BasicButtons({ variant, text, loading, type, onClick, color }: Props) {
+export default function BasicButtons({ variant, text, loading, type, onClick, color, className }: Props) {
   return (
     <Stack spacing={2} direction="row">
-      <Button color={color} variant={variant} onClick={onClick} type={type} loading={loading}>{text}</Button>
+      <Button className={className} color={color} variant={variant} onClick={onClick} type={type} loading={loading}>{text}</Button>
     </Stack>
   );
 }

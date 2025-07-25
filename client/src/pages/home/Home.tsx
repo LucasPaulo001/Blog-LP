@@ -3,6 +3,7 @@ import { usePosts } from "../../contexts/postsContext";
 import LinearIndeterminate from "../../components/Progress/Progress";
 import BasicMenu from "../../components/Button/ButtonMenu";
 import { useAuth } from "../../contexts/authContext";
+import ReactMarkdown from "react-markdown"
 
 export const Home = () => {
   const { loading, posts } = usePosts();
@@ -33,9 +34,9 @@ export const Home = () => {
               }
             </div>
             <div className="flex flex-col gap-5 items-start place-content-between">
-              <p className="line-clamp-3">
-                {post.content.slice(0, 100)}...
-              </p>
+              <div className="markdown w-full">
+                <ReactMarkdown>{post.content.slice(0, 100) + "..."}</ReactMarkdown>
+              </div>
               {post.banner && 
                 <img className="h-35 rounded" src={post.banner} alt="" />
               }

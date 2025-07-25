@@ -15,6 +15,7 @@ interface Post {
   tags: string[];
   slug: string;
   banner: string;
+  createdAt: string;
 }
 
 interface PostsContextType {

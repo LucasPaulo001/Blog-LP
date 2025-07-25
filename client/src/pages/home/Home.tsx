@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { usePosts } from "../../contexts/postsContext";
 import LinearIndeterminate from "../../components/Progress/Progress";
 import BasicMenu from "../../components/Button/ButtonMenu";
+import { useAuth } from "../../contexts/authContext";
 
 export const Home = () => {
   const { loading, posts } = usePosts();
+  const { token } = useAuth();
 
   return (
     <div>
@@ -22,13 +24,24 @@ export const Home = () => {
               <h2 className="text-xl font-semibold mb-2">
                 {post.title}
               </h2>
-              <BasicMenu loading={loading ? true : false} text="Menu" postId={post._id} />
-            </div>
-            <p className="line-clamp-3">
-              {post.content.slice(0, 100)}...
-            </p>
 
-            <div className="flex flex-wrap gap-2 mt-3">
+              {/* Botão de menu de ferramentas para postagens */}
+              {
+                token && (
+                  <BasicMenu loading={loading ? true : false} text="Menu" postId={post._id} />
+                ) 
+              }
+            </div>
+            <div className="flex flex-col gap-5 items-start place-content-between">
+              <p className="line-clamp-3">
+                {post.content.slice(0, 100)}...
+              </p>
+              {post.banner && 
+                <img className="h-35 rounded" src={post.banner} alt="" />
+              }
+            </div>
+
+            <div className="flex mt-5! flex-wrap gap-2 mt-3">
               {post.tags.map((tag, i) => (
                 <span
                   key={i}

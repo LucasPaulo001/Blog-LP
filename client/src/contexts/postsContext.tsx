@@ -2,9 +2,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import type { ReactNode } from "react";
 
+interface Author {
+  name: string;
+  email: string;
+}
+
 interface Post {
   _id: string;
   title: string;
+  author: Author;
   content: string;
   tags: string[];
   slug: string;
@@ -14,7 +20,7 @@ interface Post {
 interface PostsContextType {
   listPosts: () => void;
   postDetails: (slug: string) => void;
-  createPost: (title: string, content: string, banner: string, tags: string) => void;
+  createPost: (title: string, content: string, banner: string, tags: string[]) => void;
   posts: Post[] | null;
   loading: boolean;
   details: Post | null;
@@ -39,7 +45,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   //Criar postagem
-  const createPost = async (title: string, content: string, banner: string, tags: string) => {
+  const createPost = async (title: string, content: string, banner: string, tags: string[]) => {
     try{
       setLoading(true)
       const res = await api.post("/api/posts/create/post", { title, content, banner, tags }, {

@@ -14,7 +14,9 @@ export const CreatePost = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        createPost(title, content, banner, tags)
+        const tagsList = tags.split(",")
+
+        createPost(title, content, banner, tagsList)
         console.log(title, content, tags, banner);
     }
 

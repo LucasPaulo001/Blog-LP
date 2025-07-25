@@ -35,7 +35,7 @@ export const MenuMob = ({ showMenuMob, setShowMenuMob }: menuMob) => {
             <li className="border-b py-4 text-center w-full hover:bg-slate-100 dark:hover:bg-slate-700 transition">
               <Link to="/about" onClick={() => setShowMenuMob(false)}>Sobre</Link>
             </li>
-            {token ? (
+            {token && (
               <>
                 <li className="border-b py-4 text-center w-full hover:bg-slate-100 dark:hover:bg-slate-700 transition">
                   <Link to="/create-post" onClick={() => setShowMenuMob(false)}>
@@ -56,12 +56,6 @@ export const MenuMob = ({ showMenuMob, setShowMenuMob }: menuMob) => {
                   />
                 </li>
               </>
-            ) : (
-              <li className="border-b-1 text-center w-full">
-                <Link to="/login" onClick={() => setShowMenuMob(false)}>
-                  Entrar / Cadastrar
-                </Link>
-              </li>
             )}
             <li>
               <button className="cursor-pointer" onClick={showActive}>

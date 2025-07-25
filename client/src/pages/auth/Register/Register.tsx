@@ -44,6 +44,7 @@ export const Register = () => {
                         </div>
                         <div className="w-full">
                             <BasicTextFields 
+                            
                                 fullWidth={true} 
                                 label="Senha" 
                                 variant="standard" 

@@ -8,7 +8,7 @@ interface Props {
     type: 'submit' | 'button' | 'reset';
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     color?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
-    className: string;
+    className?: string;
 }
 
 export default function BasicButtons({ variant, text, loading, type, onClick, color, className }: Props) {

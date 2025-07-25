@@ -8,8 +8,8 @@ interface Props {
   fullWidth: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string;
-  multiline: boolean;
-  maxRows: number;
+  multiline?: boolean;
+  maxRows?: number;
 }
 
 export default function BasicTextFields({
